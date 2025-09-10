@@ -25,7 +25,7 @@ const ProjectModal = ({ project, onClose }) => (
   <AnimatePresence>
     {project && (
       <motion.div
-        className="fixed inset-0 z-50 grid place-items-center p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -38,47 +38,51 @@ const ProjectModal = ({ project, onClose }) => (
         <motion.div
           role="dialog"
           aria-modal
-          className="relative w-full max-w-3xl rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-2xl"
+          className="relative w-full max-w-3xl max-h-[90vh] rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden flex flex-col"
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 24, opacity: 0 }}
         >
-          <button
-            onClick={onClose}
-            className="absolute right-3 top-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10 p-2 hover:bg-black/5 dark:hover:bg-white/5"
-            aria-label="Close"
-          >
-            <X size={18} />
-          </button>
-          <h3 className="text-2xl font-semibold">{project.title}</h3>
-          {project.subtitle && (
-            <p className="mt-1 opacity-80">{project.subtitle}</p>
-          )}
-          <div className="mt-3 flex flex-wrap gap-2">
-            {project.tech?.map((t, i) => (
-              <Badge key={i}>{t}</Badge>
-            ))}
-          </div>
-
-          <div className="mt-6 space-y-5">
-            <div>
-              <h4 className="text-lg font-semibold">What is the problem statement?</h4>
-              <p className="mt-1 leading-relaxed">{project.problem}</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold">Why it is important</h4>
-              <p className="mt-1 leading-relaxed">{project.importance}</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold">How did I build the solution</h4>
-              <p className="mt-1 leading-relaxed whitespace-pre-line">{project.build}</p>
-            </div>
-            {project.extra && (
-              <div>
-                <h4 className="text-lg font-semibold">Additional Info</h4>
-                <p className="mt-1 leading-relaxed">{project.extra}</p>
-              </div>
+          <div className="flex-shrink-0 p-6 border-b border-black/10 dark:border-white/10">
+            <button
+              onClick={onClose}
+              className="absolute right-3 top-3 inline-flex items-center justify-center rounded-lg border border-black/10 dark:border-white/10 p-2 hover:bg-black/5 dark:hover:bg-white/5"
+              aria-label="Close"
+            >
+              <X size={18} />
+            </button>
+            <h3 className="text-2xl font-semibold pr-12">{project.title}</h3>
+            {project.subtitle && (
+              <p className="mt-1 opacity-80">{project.subtitle}</p>
             )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.tech?.map((t, i) => (
+                <Badge key={i}>{t}</Badge>
+              ))}
+            </div>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="space-y-5">
+              <div>
+                <h4 className="text-lg font-semibold">What is the problem statement?</h4>
+                <p className="mt-1 leading-relaxed">{project.problem}</p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold">Why it is important</h4>
+                <p className="mt-1 leading-relaxed">{project.importance}</p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold">How did I build the solution</h4>
+                <p className="mt-1 leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: project.build }}></p>
+              </div>
+              {project.extra && (
+                <div>
+                  <h4 className="text-lg font-semibold">Additional Info</h4>
+                  <p className="mt-1 leading-relaxed">{project.extra}</p>
+                </div>
+              )}
+            </div>
           </div>
         </motion.div>
       </motion.div>
